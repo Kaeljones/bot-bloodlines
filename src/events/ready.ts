@@ -7,8 +7,13 @@ export const once = true;
 export function execute(client: Client) {
   logger.info(`🤖 Bot conectado com sucesso como ${client.user?.tag}!`);
   
-  client.user?.setActivity('Registros', {
-    type: ActivityType.Watching,
+  client.user?.setPresence({
+    activities: [{
+      name: 'custom',
+      type: ActivityType.Custom,
+      state: 'Bot desenvolvido por Vook Store',
+    }],
+    status: 'online',
   });
 }
 export default execute;
