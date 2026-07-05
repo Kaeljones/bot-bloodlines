@@ -54,6 +54,11 @@ export function buildRegistrationPanel() {
     )
     .addSeparatorComponents(
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
+    )
+    .addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        '⚙️ *Bot desenvolvido por [Vook Store](https://discord.gg/9AUehFHxgz)*'
+      )
     );
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -79,7 +84,8 @@ export function buildRegistrationSuccessMessage(nickname: string) {
       new TextDisplayBuilder().setContent(
         `# ✅ REGISTRO CONCLUÍDO!\n\n` +
         `Seu registro foi finalizado e seu nome no servidor foi atualizado para:\n` +
-        `> **\`${nickname}\`**`
+        `> **\`${nickname}\`**\n\n` +
+        `⚙️ *Bot desenvolvido por [Vook Store](https://discord.gg/9AUehFHxgz)*`
       )
     );
 
@@ -97,7 +103,8 @@ export function buildRegistrationErrorMessage(reason: string) {
         `# ❌ REGISTRO NÃO CONCLUÍDO\n\n` +
         `Não foi possível concluir seu registro neste momento.\n\n` +
         `**Motivo:**\n` +
-        `> ${reason}`
+        `> ${reason}\n\n` +
+        `⚙️ *Bot desenvolvido por [Vook Store](https://discord.gg/9AUehFHxgz)*`
       )
     );
 
@@ -153,7 +160,8 @@ export function buildRegistrationLogMessage(data: {
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         `**Data:**\n${formatDate(new Date())}\n\n` +
-        `**Status:**\nProcessamento concluído com sucesso.`
+        `**Status:**\nProcessamento concluído com sucesso.\n\n` +
+        `⚙️ *Bot desenvolvido por [Vook Store](https://discord.gg/9AUehFHxgz)*`
       )
     );
 
@@ -180,7 +188,8 @@ export function buildRegistrationErrorLog(data: {
       new TextDisplayBuilder().setContent(
         `**Usuário:**\n<@${data.userId}>\n\n` +
         `**Erro:**\n${data.errorMsg}\n\n` +
-        `**Motivo:**\n${data.reason}`
+        `**Motivo:**\n${data.reason}\n\n` +
+        `⚙️ *Bot desenvolvido por [Vook Store](https://discord.gg/9AUehFHxgz)*`
       )
     );
 
@@ -214,7 +223,8 @@ export function buildConfigPanel(
         'Gerencie as opções do sistema de registro deste servidor.\n\n' +
         `**Canal do Painel:**\n${panelChannelMention}\n\n` +
         `**Canal de Logs:**\n${logChannelMention}\n\n` +
-        `**Cargos Aplicados:**\n${rolesList}`
+        `**Cargos Aplicados:**\n${rolesList}\n\n` +
+        `⚙️ *Bot desenvolvido por [Vook Store](https://discord.gg/9AUehFHxgz)*`
       )
     );
 
