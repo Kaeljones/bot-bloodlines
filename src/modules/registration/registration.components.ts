@@ -26,20 +26,34 @@ export function buildRegistrationPanel() {
       new TextDisplayBuilder().setContent(
         '# 📋 PAINEL DE REGISTRO\n\n' +
         'Seja bem-vindo ao sistema de registro de personagem.\n' +
-        'Para obter acesso completo ao servidor, realize o seu registro abaixo.\n\n' +
-        '### ━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+        'Para obter acesso completo ao servidor, realize o seu registro abaixo.'
+      )
+    )
+    .addSeparatorComponents(
+      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
+    )
+    .addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
         '### 📝 **Como se registrar?**\n' +
         'Clique no botão abaixo e preencha os seguintes dados:\n' +
         '• **Nome do Personagem:** Nome e sobrenome do seu personagem.\n' +
-        '• **ID do Personagem:** O ID numérico da sua conta.\n\n' +
-        '### ━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+        '• **ID do Personagem:** O ID numérico da sua conta.'
+      )
+    )
+    .addSeparatorComponents(
+      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
+    )
+    .addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
         '### 🏷️ **Formato do Apelido (Nickname):**\n' +
         'Seu nome no servidor será alterado automaticamente para:\n' +
         '> `#ID Nome do Personagem`\n\n' +
         '**Exemplo:**\n' +
-        '> `#4085 Kael Drakhar`\n\n' +
-        '### ━━━━━━━━━━━━━━━━━━━━━━━━'
+        '> `#4085 Kael Drakhar`'
       )
+    )
+    .addSeparatorComponents(
+      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     );
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
