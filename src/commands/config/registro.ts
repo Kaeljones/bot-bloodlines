@@ -6,15 +6,16 @@ import { hasAdminPermission } from '../../utils/permissions';
 export const name = 'registro';
 export const description = 'Abre o painel administrativo para configurar o sistema de registro.';
 
-export async function execute(interaction: ChatInputCommandInteraction) {
+export async function execute(interaction: ChatInputCommandInteraction): Promise<void> {
   if (!interaction.guild) return;
 
   // 1. Verify permissions
   if (!hasAdminPermission(interaction.member as any)) {
-    return interaction.reply({
+    await interaction.reply({
       content: '❌ Você não tem permissão para usar este comando (requer Administrador ou Gerenciar Servidor).',
       ephemeral: true,
     });
+    return;
   }
 
   await interaction.deferReply({ ephemeral: true });
@@ -30,6 +31,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
       flags: [MessageFlags.IsComponentsV2],
     });
   } catch (err: any) {
+    console.error('Failed to load configuration panel:', err);
     await interaction.editReply({
       content: `❌ Erro ao carregar painel de configuração: ${err.message || err}`,
     });

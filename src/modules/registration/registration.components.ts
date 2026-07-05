@@ -29,37 +29,37 @@ export function buildRegistrationPanel() {
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           'Seja bem-vindo ao sistema de registro.\n\n' +
           'Clique no botão abaixo para registrar seu personagem e receber acesso ao servidor.'
         )
-      ])
+      )
     )
     .addSeparatorComponents(
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           '**Informações necessárias:**\n' +
           '• Nome do Personagem\n' +
           '• ID do Personagem'
         )
-      ])
+      )
     )
     .addSeparatorComponents(
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           'Após o registro, seu nome será alterado automaticamente para:\n' +
           '`#ID Nome do Personagem`\n\n' +
           '**Exemplo:**\n' +
           '`#4085 Kael Drakhar`'
         )
-      ])
+      )
     );
 
   const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -88,12 +88,12 @@ export function buildRegistrationSuccessMessage(nickname: string) {
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           `Seu novo nome no servidor:\n\n` +
           `**\`${nickname}\`**`
         )
-      ])
+      )
     );
 
   return container;
@@ -112,11 +112,11 @@ export function buildRegistrationErrorMessage(reason: string) {
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           `**Motivo:**\n${reason}`
         )
-      ])
+      )
     );
 
   return container;
@@ -146,7 +146,7 @@ export function buildRegistrationLogMessage(data: {
     )
     .addSectionComponents(
       new SectionBuilder()
-        .addTextDisplayComponents([
+        .addTextDisplayComponents(
           new TextDisplayBuilder().setContent(
             `**Usuário Discord:**\n<@${data.userId}>\n\n` +
             `**ID Discord:**\n${data.userId}\n\n` +
@@ -155,7 +155,7 @@ export function buildRegistrationLogMessage(data: {
             `**Nickname Aplicado:**\n${data.nickname}\n\n` +
             `**Cargos Aplicados:**\n${roleMentions}`
           )
-        ])
+        )
         .setThumbnailAccessory(
           new ThumbnailBuilder()
             .setURL(data.avatarUrl)
@@ -166,12 +166,12 @@ export function buildRegistrationLogMessage(data: {
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           `**Data:**\n${formatDate(new Date())}\n\n` +
           `**Status:**\nRegistro concluído com sucesso.`
         )
-      ])
+      )
     );
 
   return container;
@@ -194,13 +194,13 @@ export function buildRegistrationErrorLog(data: {
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           `**Usuário:**\n<@${data.userId}>\n\n` +
           `**Erro:**\n${data.errorMsg}\n\n` +
           `**Motivo:**\n${data.reason}`
         )
-      ])
+      )
     );
 
   return container;
@@ -222,7 +222,7 @@ export function buildConfigPanel(
     : '*Não configurado*';
 
   const rolesList = config.roles.length > 0
-    ? config.roles.map(r => `• <@&${r.roleId}>${r.enabled ? '' : ' (Desativado)'}`).join('\n')
+    ? config.roles.map(r => `• <@&${r.roleId}>`).join('\n')
     : '*Nenhum cargo configurado*';
 
   const container = new ContainerBuilder()
@@ -234,14 +234,14 @@ export function buildConfigPanel(
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           'Gerencie as opções do sistema de registro deste servidor.\n\n' +
           `**Canal do Painel:**\n${panelChannelMention}\n\n` +
           `**Canal de Logs:**\n${logChannelMention}\n\n` +
           `**Cargos Aplicados:**\n${rolesList}`
         )
-      ])
+      )
     );
 
   // Setup buttons row 1
@@ -301,13 +301,13 @@ export function buildRolesListMessage(roles: RegistrationRole[]) {
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
     .addSectionComponents(
-      new SectionBuilder().addTextDisplayComponents([
+      new SectionBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           roles.length > 0
             ? roles.map(r => `• <@&${r.roleId}> (ID: \`${r.roleId}\`) [${r.roleName || 'Sem Nome'}]`).join('\n')
             : '*Nenhum cargo configurado no momento.*'
         )
-      ])
+      )
     );
 
   return container;
