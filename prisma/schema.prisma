@@ -1,0 +1,61 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model GuildConfig {
+  id                         String             @id @default(cuid())
+  guildId                    String             @unique
+  registrationPanelChannelId String?
+  registrationPanelMessageId String?
+  registrationLogChannelId   String?
+  createdAt                  DateTime           @default(now())
+  updatedAt                  DateTime           @updatedAt
+  roles                      RegistrationRole[]
+  registrations              Registration[]
+}
+
+model RegistrationRole {
+  id        String   @id @default(cuid())
+  guildId   String
+  roleId    String
+  roleName  String?
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  guildConfig GuildConfig @relation(fields: [guildId], references: [guildId], onDelete: Cascade)
+
+  @@unique([guildId, roleId])
+}
+
+model Registration {
+  id            String   @id @default(cuid())
+  guildId       String
+  userId        String
+  characterName String
+  characterId   String
+  nickname      String
+  appliedRoles  Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  guildConfig GuildConfig @relation(fields: [guildId], references: [guildId], onDelete: Cascade)
+
+  @@unique([guildId, userId])
+  @@unique([guildId, characterId])
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  guildId      String
+  action       String
+  userId       String?
+  targetUserId String?
+  data         Json?
+  createdAt    DateTime @default(now())
+}
