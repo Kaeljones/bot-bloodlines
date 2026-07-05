@@ -16,43 +16,32 @@ import {
 import { GuildConfig, RegistrationRole } from '@prisma/client';
 import { formatDate } from '../../utils/formatDate';
 
+// Monochromatic Accent Color (blends with Discord's dark mode background)
+const MONO_COLOR = 0x2B2D31;
+
 /**
  * Builds the permanent Registration Panel message payload.
  */
 export function buildRegistrationPanel() {
   const container = new ContainerBuilder()
-    .setAccentColor(0x5865F2) // Blurple
-    .addTextDisplayComponents(
-      new TextDisplayBuilder().setContent('## 📋 PAINEL DE REGISTRO')
-    )
-    .addSeparatorComponents(
-      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
-    )
+    .setAccentColor(MONO_COLOR)
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
-        'Seja bem-vindo ao sistema de registro.\n\n' +
-        'Clique no botão abaixo para registrar seu personagem e receber acesso ao servidor.'
-      )
-    )
-    .addSeparatorComponents(
-      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
-    )
-    .addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        '**Informações necessárias:**\n' +
-        '• Nome do Personagem\n' +
-        '• ID do Personagem'
-      )
-    )
-    .addSeparatorComponents(
-      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
-    )
-    .addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        'Após o registro, seu nome será alterado automaticamente para:\n' +
-        '`#ID Nome do Personagem`\n\n' +
+        '# 📋 PAINEL DE REGISTRO\n\n' +
+        'Seja bem-vindo ao sistema de registro de personagem.\n' +
+        'Para obter acesso completo ao servidor, realize o seu registro abaixo.\n\n' +
+        '### ━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+        '### 📝 **Como se registrar?**\n' +
+        'Clique no botão abaixo e preencha os seguintes dados:\n' +
+        '• **Nome do Personagem:** Nome e sobrenome do seu personagem.\n' +
+        '• **ID do Personagem:** O ID numérico da sua conta.\n\n' +
+        '### ━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+        '### 🏷️ **Formato do Apelido (Nickname):**\n' +
+        'Seu nome no servidor será alterado automaticamente para:\n' +
+        '> `#ID Nome do Personagem`\n\n' +
         '**Exemplo:**\n' +
-        '`#4085 Kael Drakhar`'
+        '> `#4085 Kael Drakhar`\n\n' +
+        '### ━━━━━━━━━━━━━━━━━━━━━━━━'
       )
     );
 
@@ -61,7 +50,7 @@ export function buildRegistrationPanel() {
       .setCustomId('registration:start')
       .setLabel('Registrar')
       .setEmoji('📝')
-      .setStyle(ButtonStyle.Success)
+      .setStyle(ButtonStyle.Secondary)
   );
 
   container.addActionRowComponents(row);
@@ -74,17 +63,12 @@ export function buildRegistrationPanel() {
  */
 export function buildRegistrationSuccessMessage(nickname: string) {
   const container = new ContainerBuilder()
-    .setAccentColor(0x2ECC71) // Emerald Green
-    .addTextDisplayComponents(
-      new TextDisplayBuilder().setContent('## ✅ Registro concluído com sucesso!')
-    )
-    .addSeparatorComponents(
-      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
-    )
+    .setAccentColor(MONO_COLOR)
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
-        `Seu novo nome no servidor:\n\n` +
-        `**\`${nickname}\`**`
+        `# ✅ REGISTRO CONCLUÍDO!\n\n` +
+        `Seu registro foi finalizado e seu nome no servidor foi atualizado para:\n` +
+        `> **\`${nickname}\`**`
       )
     );
 
@@ -96,16 +80,13 @@ export function buildRegistrationSuccessMessage(nickname: string) {
  */
 export function buildRegistrationErrorMessage(reason: string) {
   const container = new ContainerBuilder()
-    .setAccentColor(0xE74C3C) // Alizarin Red
-    .addTextDisplayComponents(
-      new TextDisplayBuilder().setContent('## ❌ Não foi possível concluir seu registro.')
-    )
-    .addSeparatorComponents(
-      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
-    )
+    .setAccentColor(MONO_COLOR)
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
-        `**Motivo:**\n${reason}`
+        `# ❌ REGISTRO NÃO CONCLUÍDO\n\n` +
+        `Não foi possível concluir seu registro neste momento.\n\n` +
+        `**Motivo:**\n` +
+        `> ${reason}`
       )
     );
 
@@ -126,19 +107,16 @@ export function buildRegistrationLogMessage(data: {
   isUpdate?: boolean;
 }) {
   const roleMentions = data.appliedRoleIds.map(id => `<@&${id}>`).join(', ') || 'Nenhum cargo aplicado';
-
-  const title = data.isUpdate ? '## 🔄 REGISTRO ATUALIZADO' : '## ✅ NOVO REGISTRO REALIZADO';
-  const color = data.isUpdate ? 0x3498DB : 0x2ECC71; // Blue for update, Green for new
+  const title = data.isUpdate ? '# 🔄 REGISTRO ATUALIZADO' : '# ✅ NOVO REGISTRO REALIZADO';
 
   const container = new ContainerBuilder()
-    .setAccentColor(color)
+    .setAccentColor(MONO_COLOR)
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(title)
     )
     .addSeparatorComponents(
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
-    // Keep SectionBuilder here since it uses a valid ThumbnailBuilder accessory
     .addSectionComponents(
       new SectionBuilder()
         .addTextDisplayComponents(
@@ -154,7 +132,7 @@ export function buildRegistrationLogMessage(data: {
         .setThumbnailAccessory(
           new ThumbnailBuilder()
             .setURL(data.avatarUrl)
-            .setDescription('Avatar do usuário registrado')
+            .setDescription('Avatar do usuário')
         )
     )
     .addSeparatorComponents(
@@ -163,7 +141,7 @@ export function buildRegistrationLogMessage(data: {
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         `**Data:**\n${formatDate(new Date())}\n\n` +
-        `**Status:**\nRegistro concluído com sucesso.`
+        `**Status:**\nProcessamento concluído com sucesso.`
       )
     );
 
@@ -179,9 +157,9 @@ export function buildRegistrationErrorLog(data: {
   reason: string;
 }) {
   const container = new ContainerBuilder()
-    .setAccentColor(0xE74C3C) // Red
+    .setAccentColor(MONO_COLOR)
     .addTextDisplayComponents(
-      new TextDisplayBuilder().setContent('## ⚠️ ERRO NO REGISTRO')
+      new TextDisplayBuilder().setContent('# ⚠️ ERRO NO REGISTRO')
     )
     .addSeparatorComponents(
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
@@ -217,15 +195,10 @@ export function buildConfigPanel(
     : '*Nenhum cargo configurado*';
 
   const container = new ContainerBuilder()
-    .setAccentColor(0xF1C40F) // Yellow
-    .addTextDisplayComponents(
-      new TextDisplayBuilder().setContent('## ⚙️ CONFIGURAÇÃO DO REGISTRO')
-    )
-    .addSeparatorComponents(
-      new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
-    )
+    .setAccentColor(MONO_COLOR)
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
+        '# ⚙️ CONFIGURAÇÃO DO REGISTRO\n\n' +
         'Gerencie as opções do sistema de registro deste servidor.\n\n' +
         `**Canal do Painel:**\n${panelChannelMention}\n\n` +
         `**Canal de Logs:**\n${logChannelMention}\n\n` +
@@ -239,17 +212,17 @@ export function buildConfigPanel(
       .setCustomId('config:set_panel_channel')
       .setLabel('Definir Canal do Painel')
       .setEmoji('📌')
-      .setStyle(ButtonStyle.Primary),
+      .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId('config:set_log_channel')
       .setLabel('Definir Canal de Logs')
       .setEmoji('📜')
-      .setStyle(ButtonStyle.Primary),
+      .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId('config:add_role')
       .setLabel('Adicionar Cargo')
       .setEmoji('➕')
-      .setStyle(ButtonStyle.Success)
+      .setStyle(ButtonStyle.Secondary)
   );
 
   // Setup buttons row 2
@@ -258,7 +231,7 @@ export function buildConfigPanel(
       .setCustomId('config:remove_role')
       .setLabel('Remover Cargo')
       .setEmoji('➖')
-      .setStyle(ButtonStyle.Danger)
+      .setStyle(ButtonStyle.Secondary)
       .setDisabled(config.roles.length === 0),
     new ButtonBuilder()
       .setCustomId('config:list_roles')
@@ -269,7 +242,7 @@ export function buildConfigPanel(
       .setCustomId('config:reset_config')
       .setLabel('Resetar Configuração')
       .setEmoji('🗑')
-      .setStyle(ButtonStyle.Danger)
+      .setStyle(ButtonStyle.Secondary)
   );
 
   container.addActionRowComponents(row1, row2);
@@ -282,7 +255,7 @@ export function buildConfigPanel(
  */
 export function buildRolesListMessage(roles: RegistrationRole[]) {
   const container = new ContainerBuilder()
-    .setAccentColor(0x3498DB) // Blue
+    .setAccentColor(MONO_COLOR)
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent('## 📋 CARGOS CONFIGURADOS')
     )
