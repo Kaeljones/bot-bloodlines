@@ -236,11 +236,10 @@ export class RegistrationService {
             appliedRoleIds: currentReg.appliedRoles ? JSON.parse(currentReg.appliedRoles as string) : [],
             guild,
             avatarUrl: member.user.displayAvatarURL({ forceStatic: false }),
+            isUpdate: true,
           });
 
-          // Prepend update indicator text before sending container
           await logChannel.send({
-            content: '🔄 **REGISTRO ATUALIZADO**',
             components: [logContent],
             flags: [MessageFlags.IsComponentsV2],
           });

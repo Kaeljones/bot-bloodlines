@@ -123,13 +123,17 @@ export function buildRegistrationLogMessage(data: {
   appliedRoleIds: string[];
   guild: Guild;
   avatarUrl: string;
+  isUpdate?: boolean;
 }) {
   const roleMentions = data.appliedRoleIds.map(id => `<@&${id}>`).join(', ') || 'Nenhum cargo aplicado';
 
+  const title = data.isUpdate ? '## 🔄 REGISTRO ATUALIZADO' : '## ✅ NOVO REGISTRO REALIZADO';
+  const color = data.isUpdate ? 0x3498DB : 0x2ECC71; // Blue for update, Green for new
+
   const container = new ContainerBuilder()
-    .setAccentColor(0x2ECC71) // Emerald Green
+    .setAccentColor(color)
     .addTextDisplayComponents(
-      new TextDisplayBuilder().setContent('## ✅ NOVO REGISTRO REALIZADO')
+      new TextDisplayBuilder().setContent(title)
     )
     .addSeparatorComponents(
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
