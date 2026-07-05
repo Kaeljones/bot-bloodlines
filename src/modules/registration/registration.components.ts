@@ -16,15 +16,12 @@ import {
 import { GuildConfig, RegistrationRole } from '@prisma/client';
 import { formatDate } from '../../utils/formatDate';
 
-// Monochromatic Accent Color (blends with Discord's dark mode background)
-const MONO_COLOR = 0x2B2D31;
-
 /**
  * Builds the permanent Registration Panel message payload.
  */
 export function buildRegistrationPanel() {
   const container = new ContainerBuilder()
-    .setAccentColor(MONO_COLOR)
+    .clearAccentColor()
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         '# 📋 PAINEL DE REGISTRO\n\n' +
@@ -63,7 +60,7 @@ export function buildRegistrationPanel() {
  */
 export function buildRegistrationSuccessMessage(nickname: string) {
   const container = new ContainerBuilder()
-    .setAccentColor(MONO_COLOR)
+    .clearAccentColor()
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         `# ✅ REGISTRO CONCLUÍDO!\n\n` +
@@ -80,7 +77,7 @@ export function buildRegistrationSuccessMessage(nickname: string) {
  */
 export function buildRegistrationErrorMessage(reason: string) {
   const container = new ContainerBuilder()
-    .setAccentColor(MONO_COLOR)
+    .clearAccentColor()
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         `# ❌ REGISTRO NÃO CONCLUÍDO\n\n` +
@@ -110,13 +107,14 @@ export function buildRegistrationLogMessage(data: {
   const title = data.isUpdate ? '# 🔄 REGISTRO ATUALIZADO' : '# ✅ NOVO REGISTRO REALIZADO';
 
   const container = new ContainerBuilder()
-    .setAccentColor(MONO_COLOR)
+    .clearAccentColor()
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(title)
     )
     .addSeparatorComponents(
       new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Small)
     )
+    // Keep SectionBuilder here since it uses a valid ThumbnailBuilder accessory
     .addSectionComponents(
       new SectionBuilder()
         .addTextDisplayComponents(
@@ -157,7 +155,7 @@ export function buildRegistrationErrorLog(data: {
   reason: string;
 }) {
   const container = new ContainerBuilder()
-    .setAccentColor(MONO_COLOR)
+    .clearAccentColor()
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent('# ⚠️ ERRO NO REGISTRO')
     )
@@ -195,7 +193,7 @@ export function buildConfigPanel(
     : '*Nenhum cargo configurado*';
 
   const container = new ContainerBuilder()
-    .setAccentColor(MONO_COLOR)
+    .clearAccentColor()
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         '# ⚙️ CONFIGURAÇÃO DO REGISTRO\n\n' +
@@ -255,7 +253,7 @@ export function buildConfigPanel(
  */
 export function buildRolesListMessage(roles: RegistrationRole[]) {
   const container = new ContainerBuilder()
-    .setAccentColor(MONO_COLOR)
+    .clearAccentColor()
     .addTextDisplayComponents(
       new TextDisplayBuilder().setContent('## 📋 CARGOS CONFIGURADOS')
     )
