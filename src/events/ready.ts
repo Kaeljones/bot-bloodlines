@@ -11,7 +11,7 @@ export function execute(client: Client) {
     activities: [{
       name: 'custom',
       type: ActivityType.Custom,
-      state: 'Bot desenvolvido por Vook Store',
+      state: 'Gerenciando registros...',
     }],
     status: 'online',
   });
